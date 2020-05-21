@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -122,6 +123,7 @@ namespace WeatherStationWebAPP.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<WeatherObservation>> PostWeatherObservation(DtoWeatherObservation dtoWeatherObservation)
         {
             var place = _context.Places.FirstOrDefault(p =>
@@ -157,6 +159,7 @@ namespace WeatherStationWebAPP.Controllers
 
         // DELETE: api/WeatherObservations/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult<WeatherObservation>> DeleteWeatherObservation(long id)
         {
             var weatherObservation = await _context.Observations.FindAsync(id);
