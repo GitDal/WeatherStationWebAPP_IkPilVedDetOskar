@@ -24,9 +24,9 @@ namespace WeatherStationWebAPP.Models
         }
 
         public DateTime Date { get; set; }
-        public float Temperature { get; set; }
+        public double Temperature { get; set; }
         public int Humidity { get; set; }
-        public float Pressure { get; set; }
+        public double Pressure { get; set; }
 
         // Place data
         public string Name { get; set; }

@@ -57,12 +57,12 @@ namespace WeatherStationWebAPP
                 };
             });
 
-            //services.AddCors(); //Cross Origin Resource Sharing - Enabled
-            services.AddCors(options => options.AddPolicy("AllowAllOrigins",
-                builder =>
-                {
-                    builder.AllowAnyOrigin();
-                }));
+            services.AddCors(); //Cross Origin Resource Sharing - Enabled
+            //services.AddCors(options => options.AddPolicy("AllowAllOrigins",
+            //    builder =>
+            //    {
+            //        builder.AllowAnyOrigin();
+            //    }));
             services.AddControllers();
         }
 
@@ -93,7 +93,7 @@ namespace WeatherStationWebAPP
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
-                endpoints.MapHub<ChatHub>("/updateHub");
+                endpoints.MapHub<UpdateHub>("/updateHub");
             });
         }
     }
