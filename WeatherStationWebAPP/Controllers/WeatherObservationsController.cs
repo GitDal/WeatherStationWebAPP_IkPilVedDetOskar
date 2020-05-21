@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using WeatherStationWebAPP.Data;
+using WeatherStationWebAPP.Hubs;
 using WeatherStationWebAPP.Models;
 
 namespace WeatherStationWebAPP.Controllers
@@ -15,10 +17,12 @@ namespace WeatherStationWebAPP.Controllers
     public class WeatherObservationsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHubContext<UpdateHub> _hubContext;
 
-        public WeatherObservationsController(ApplicationDbContext context)
+        public WeatherObservationsController(ApplicationDbContext context, IHubContext<UpdateHub> hub)
         {
             _context = context;
+            _hubContext = hub;
         }
 
 
@@ -145,6 +149,8 @@ namespace WeatherStationWebAPP.Controllers
 
             _context.Observations.Add(weatherObservation);
             await _context.SaveChangesAsync();
+
+            await _hubContext.Clients.All.SendAsync("NewData", dtoWeatherObservation.Name);
 
             return CreatedAtAction("GetWeatherObservation", new { id = weatherObservation.Id }, weatherObservation);
         }

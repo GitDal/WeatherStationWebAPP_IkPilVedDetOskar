@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using WeatherStationWebAPP.Hubs;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.SignalR;
 
 namespace WeatherStationWebAPP
 {
@@ -32,7 +33,7 @@ namespace WeatherStationWebAPP
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
             services.AddSignalR();
@@ -56,7 +57,12 @@ namespace WeatherStationWebAPP
                 };
             });
 
-            services.AddCors(); //Cross Origin Resource Sharing - Enabled
+            //services.AddCors(); //Cross Origin Resource Sharing - Enabled
+            services.AddCors(options => options.AddPolicy("AllowAllOrigins",
+                builder =>
+                {
+                    builder.AllowAnyOrigin();
+                }));
             services.AddControllers();
         }
 
@@ -86,8 +92,8 @@ namespace WeatherStationWebAPP
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
-                endpoints.MapHub<ChatHub>("/chatHub");
                 endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/updateHub");
             });
         }
     }
