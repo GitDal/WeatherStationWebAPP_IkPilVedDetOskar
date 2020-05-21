@@ -1,0 +1,81 @@
+https://localhost:44302/api/WeatherObservations/2020-05-22
+
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+pm.test("Response data is an array", function(){
+    let res = pm.response.json();
+    pm.expect(res).to.be.an('array');
+});
+
+pm.test("Response data holds 2 observations", function(){
+    let res = pm.response.json();
+    pm.expect(res).to.have.lengthOf(2);
+});
+
+pm.test("Property 'Date' is a string", function(){
+    let res = pm.response.json();
+    pm.expect(res[0].date).to.be.a('string');
+});
+
+pm.test("'Date' has correct value", function(){
+    let res = pm.response.json();
+    pm.expect(res[0].date).to.be.string('2020-05-22');
+    pm.expect(res[1].date).to.be.string('2020-05-22');
+});
+
+pm.test("Property 'Temperature' is a number", function(){
+    let res = pm.response.json();
+    pm.expect(res[0].temperature).to.be.a('number');
+});
+
+pm.test("'Temperature' has correct value", function(){
+    let res = pm.response.json();
+    pm.expect(res[0].temperature).to.be.equal(17.2);
+    pm.expect(res[1].temperature).to.be.equal(18.1);
+});
+
+pm.test("Property 'Humidity' is a number", function(){
+    let res = pm.response.json();
+    pm.expect(res[0].humidity).to.be.a('number');
+});
+
+pm.test("'Humidity' has correct value", function(){
+    let res = pm.response.json();
+    pm.expect(res[0].humidity).to.be.equal(24);
+    pm.expect(res[1].humidity).to.be.equal(25);
+});
+
+pm.test("Property 'Pressure' is a number", function(){
+    let res = pm.response.json();
+    pm.expect(res[0].pressure).to.be.a('number');
+});
+
+pm.test("'Pressure' has correct value", function(){
+    let res = pm.response.json();
+    pm.expect(res[0].pressure).to.be.equal(12.2);
+    pm.expect(res[1].pressure).to.be.equal(14.4);
+});
+
+pm.test("Property 'Latitude' is a number", function(){
+    let res = pm.response.json();
+    pm.expect(res[0].latitude).to.be.a('number');
+});
+
+pm.test("'Latitude' has correct value", function(){
+    let res = pm.response.json();
+    pm.expect(res[0].latitude).to.equal(56.170295);
+    pm.expect(res[1].latitude).to.equal(56.170295);
+});
+
+pm.test("Property 'Longitude' is a number", function(){
+    let res = pm.response.json();
+    pm.expect(res[0].longitude).to.be.a('number');
+});
+
+pm.test("'Longitude' has correct value", function(){
+    let res = pm.response.json();
+    pm.expect(res[0].longitude).to.equal(10.199121);
+    pm.expect(res[1].longitude).to.equal(10.199121);
+});

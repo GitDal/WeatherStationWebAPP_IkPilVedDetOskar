@@ -1,0 +1,55 @@
+https://localhost:44302/api/WeatherObservations/
+
+pm.test("Status code is 201", function(){
+    pm.response.to.have.status(201);
+});
+
+pm.test("Response data holds 1 observation", function(){
+    let res = pm.response.json();
+    pm.expect(res).to.be.an('object');
+});
+
+pm.test("Property 'Date' is a string", function(){
+    let res = pm.response.json();
+    pm.expect(res.date).to.be.a('string');
+});
+
+pm.test("Property 'Temperature' is a number", function(){
+    let res = pm.response.json();
+    pm.expect(res.temperature).to.be.a('number');
+});
+
+pm.test("'Temperature' has correct value", function(){
+    let res = pm.response.json();
+    pm.expect(res.temperature).to.be.equal(23.69);
+});
+
+pm.test("Property 'Humidity' is a number", function(){
+    let res = pm.response.json();
+    pm.expect(res.humidity).to.be.a('number');
+});
+
+pm.test("'Humidity' has correct value", function(){
+    let res = pm.response.json();
+    pm.expect(res.humidity).to.be.equal(30);
+});
+
+pm.test("Property 'Pressure' is a number", function(){
+    let res = pm.response.json();
+    pm.expect(res.pressure).to.be.a('number');
+});
+
+pm.test("'Pressure' has correct value", function(){
+    let res = pm.response.json();
+    pm.expect(res.pressure).to.be.equal(17.92);
+});
+
+pm.test("Property 'Id' is a number", function(){
+    let res = pm.response.json();
+    pm.expect(res.id).to.be.a('number');
+});
+
+pm.test("Property 'PlaceId' is a number", function(){
+    let res = pm.response.json();
+    pm.expect(res.placeId).to.be.a('number');
+});
