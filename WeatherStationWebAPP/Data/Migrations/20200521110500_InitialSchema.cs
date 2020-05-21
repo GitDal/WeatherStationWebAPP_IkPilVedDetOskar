@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WeatherStationWebAPP.Data.Migrations
 {
-    public partial class InitialScheme : Migration
+    public partial class InitialSchema : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,9 +29,9 @@ namespace WeatherStationWebAPP.Data.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(nullable: false),
-                    Temperature = table.Column<float>(nullable: false),
+                    Temperature = table.Column<double>(nullable: false),
                     Humidity = table.Column<int>(nullable: false),
-                    Pressure = table.Column<float>(nullable: false),
+                    Pressure = table.Column<double>(nullable: false),
                     PlaceId = table.Column<int>(nullable: false),
                     PlaceId1 = table.Column<int>(nullable: true)
                 },

@@ -11,9 +11,9 @@ namespace WeatherStationWebAPP.Models
     {
         public long Id { get; set; }
         public DateTime Date { get; set; }
-        public float Temperature { get; set; }
-        public  int Humidity { get; set; }
-        public float Pressure { get; set; }
+        public double Temperature { get; set; }
+        public int Humidity { get; set; }
+        public double Pressure { get; set; }
 
         //Navigational property to Place
         public int PlaceId { get; set; }

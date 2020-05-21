@@ -149,8 +149,8 @@ namespace WeatherStationWebAPP.Controllers
 
             _context.Observations.Add(weatherObservation);
             await _context.SaveChangesAsync();
-
-            await _hubContext.Clients.All.SendAsync("NewData", dtoWeatherObservation.Name);
+            
+            await _hubContext.Clients.All.SendAsync("NewData", dtoWeatherObservation);
 
             return CreatedAtAction("GetWeatherObservation", new { id = weatherObservation.Id }, weatherObservation);
         }

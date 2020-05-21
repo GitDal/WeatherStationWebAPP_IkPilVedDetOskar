@@ -10,8 +10,8 @@ using WeatherStationWebAPP.Data;
 namespace WeatherStationWebAPP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200519225020_InitialScheme")]
-    partial class InitialScheme
+    [Migration("20200521110500_InitialSchema")]
+    partial class InitialSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -264,11 +264,11 @@ namespace WeatherStationWebAPP.Data.Migrations
                     b.Property<int?>("PlaceId1")
                         .HasColumnType("int");
 
-                    b.Property<float>("Pressure")
-                        .HasColumnType("real");
+                    b.Property<double>("Pressure")
+                        .HasColumnType("float");
 
-                    b.Property<float>("Temperature")
-                        .HasColumnType("real");
+                    b.Property<double>("Temperature")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
