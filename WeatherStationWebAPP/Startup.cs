@@ -16,6 +16,7 @@ using WeatherStationWebAPP.Hubs;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.SignalR;
+using WeatherStationWebAPP.Utilities;
 
 namespace WeatherStationWebAPP
 {
@@ -38,6 +39,12 @@ namespace WeatherStationWebAPP
             services.AddRazorPages();
             services.AddSignalR();
 
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.UTF8.GetBytes(appSettings.SecretKey);
+
             //Authentication: Jwtbearer
             services.AddAuthentication(options =>
             {
@@ -51,7 +58,7 @@ namespace WeatherStationWebAPP
                     ValidateAudience = false,
                     ValidateIssuer = false,
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secret")),
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateLifetime = true, //validate the expiration and not before values in the token
                     ClockSkew = TimeSpan.FromMinutes(5) //5 minute tolerance for the expiration date
                 };

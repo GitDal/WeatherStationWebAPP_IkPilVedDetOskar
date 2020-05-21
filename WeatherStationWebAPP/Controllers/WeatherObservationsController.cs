@@ -85,39 +85,6 @@ namespace WeatherStationWebAPP.Controllers
 
             return weatherObservation;
         }
-        
-
-        // PUT: api/WeatherObservations/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        /*[HttpPut("{id}")]
-        public async Task<IActionResult> PutWeatherObservation(long id, WeatherObservation weatherObservation)
-        {
-            if (id != weatherObservation.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(weatherObservation).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!WeatherObservationExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }*/
 
         // POST: api/WeatherObservations
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for

@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using WeatherStationWebAPP.Data;
 using WeatherStationWebAPP.Models;
+using WeatherStationWebAPP.Utilities;
 
 namespace WeatherStationWebAPP.Controllers
 {
@@ -20,11 +22,13 @@ namespace WeatherStationWebAPP.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly AppSettings _appSettings;
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IOptions<AppSettings> appSettings)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _appSettings = appSettings.Value;
         }
 
         // Register og login endpoints below:
@@ -84,12 +88,11 @@ namespace WeatherStationWebAPP.Controllers
                     new DateTimeOffset(DateTime.Now.AddDays(1)).ToUnixTimeSeconds().ToString()),
             };
 
+            var key = Encoding.UTF8.GetBytes(_appSettings.SecretKey);
             var token = new JwtSecurityToken(
                 new JwtHeader(
                     new SigningCredentials(
-                        new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(
-                                "the secret that needs to be at least 16 characeters long for HmacSha256")), 
+                        new SymmetricSecurityKey(key), 
                         SecurityAlgorithms.HmacSha256)), 
                 new JwtPayload(claims));
 
