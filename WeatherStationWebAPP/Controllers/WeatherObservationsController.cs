@@ -27,7 +27,7 @@ namespace WeatherStationWebAPP.Controllers
         }
 
 
-        /************** SLET MIG JEG ER KUN TIL TEST HVOR JEG SEEDER DATABASEN ******/
+        /************** SEEDER DATABASEN ********************************************/
         [HttpGet("seed")]
         public async Task<ActionResult<IEnumerable<DtoWeatherObservation>>> Seed()
         {
@@ -44,6 +44,12 @@ namespace WeatherStationWebAPP.Controllers
         {
             var weatherObservations = await _context.Observations.OrderByDescending(o => o.Date).Take(3).ToListAsync();
 
+            foreach (var weatherObservation in weatherObservations)
+            {
+                weatherObservation.Pressure = Math.Round(weatherObservation.Pressure, 1);
+                weatherObservation.Temperature = Math.Round(weatherObservation.Temperature, 1);
+            }
+
             return ConvertToDtoWeatherObservations(weatherObservations);
 
         }
@@ -57,6 +63,12 @@ namespace WeatherStationWebAPP.Controllers
             var weatherObservations = await _context.Observations.Where(o => o.Date.Date == date)
                 .OrderByDescending(o => o.Date).ToListAsync();
 
+            foreach (var weatherObservation in weatherObservations)
+            {
+                weatherObservation.Pressure = Math.Round(weatherObservation.Pressure, 1);
+                weatherObservation.Temperature = Math.Round(weatherObservation.Temperature, 1);
+            }
+
             return ConvertToDtoWeatherObservations(weatherObservations);
         }
         
@@ -67,6 +79,12 @@ namespace WeatherStationWebAPP.Controllers
         {
             var weatherObservations = await _context.Observations.Where(o => o.Date >= startTime && o.Date <= endTime)
                 .OrderByDescending(o => o.Date).ToListAsync();
+
+            foreach (var weatherObservation in weatherObservations)
+            {
+                weatherObservation.Pressure = Math.Round(weatherObservation.Pressure, 1);
+                weatherObservation.Temperature = Math.Round(weatherObservation.Temperature, 1);
+            }
 
             return ConvertToDtoWeatherObservations(weatherObservations);
         }
@@ -82,6 +100,9 @@ namespace WeatherStationWebAPP.Controllers
             {
                 return NotFound();
             }
+
+            weatherObservation.Pressure = Math.Round(weatherObservation.Pressure, 1);
+            weatherObservation.Temperature = Math.Round(weatherObservation.Temperature, 1);
 
             return weatherObservation;
         }
